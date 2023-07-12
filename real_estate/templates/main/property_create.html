@@ -5,19 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Cloud Archers</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <img src="{% static 'images/logo.svg' %}" alt="" class="logo">
 </head>
 <body>
-   <nav>
-    <ul class="navigation">
-        <li><i class="fa fa-home"></i> Rentals</li>
-        <li><i class="fa fa-building"></i> Stands</li>
-        <li><i class="fa fa-shopping-cart"></i> Sales</li>
-        <li><i class="fa fa-server"></i> Hosting</li>
-    </ul>
-   </nav> 
+  <nav class="topnav" id="myTopnav">
+  <a href="#home" class="active">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</nav> 
 
 <div class="row">
     <div class="card">
@@ -57,5 +59,20 @@
     </div>
 </div>
 
+
+<script>
+/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+    
 </body>
+
+    
 </html>
