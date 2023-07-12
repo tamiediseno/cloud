@@ -10,14 +10,15 @@
     <img src="{% static 'images/logo.svg' %}" alt="" class="logo">
 </head>
 <body>
-   <nav>
-    <ul class="navigation">
-        <li><i class="fa fa-home"></i> Rentals</li>
-        <li><i class="fa fa-building"></i> Stands</li>
-        <li><i class="fa fa-shopping-cart"></i> Sales</li>
-        <li><i class="fa fa-server"></i> Hosting</li>
-    </ul>
-   </nav> 
+  <button id="nav-button">Toggle Navigation</button>
+    <div class="sidebar">
+        <ul class="navigation">
+            <li><i class="fa fa-home"></i> Rentals</li>
+            <li><i class="fa fa-building"></i> Stands</li>
+            <li><i class="fa fa-shopping-cart"></i> Sales</li>
+            <li><i class="fa fa-server"></i> Hosting</li>
+        </ul>
+    </div>
 
 <div class="row">
     <div class="card">
@@ -56,6 +57,18 @@
       </div>
     </div>
 </div>
+<script>
+        var navButton = document.getElementById('nav-button');
+        var navigation = document.querySelector('.navigation');
+
+        navButton.addEventListener('click', function() {
+            if (navigation.style.display === 'none') {
+                navigation.style.display = 'block';
+            } else {
+                navigation.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
