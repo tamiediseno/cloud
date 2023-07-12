@@ -12,7 +12,7 @@ body {
     background-color: aliceblue;
 }
 
-  <style>
+  
         .navigation {
             color: rgb(55, 4, 131);
             display: flex;
@@ -36,9 +36,12 @@ body {
             .navigation {
                 display: none;
                 flex-direction: column;
-            }
-            .sidebar {
+                position: absolute;
+                top: 50px;
+                right: 0;
                 background-color: rgba(255, 255, 255, 0.5);
+                padding: 10px;
+                border-radius: 10px;
             }
             .hamburger {
                 display: block;
@@ -56,6 +59,7 @@ body {
                 transition: 0.4s;
             }
         }
+
 .card {
   flex-basis: calc(50% - 20px);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
