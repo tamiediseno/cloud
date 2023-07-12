@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-r1l5c)cza0a2fui$bkmqeb$r-g6tp43usdult#v*(6qs8*)b2x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','https://cloudarchers.onrender.com','cloudarchers.onrender.com']
 AUTH_USER_MODEL = 'real_estate.AccessKey'
 
 
