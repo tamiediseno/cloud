@@ -24,6 +24,7 @@
         </ul>
     </div>
 
+
 <div class="row">
     <div class="card">
       <img src="{% static 'images/rent.jpg' %}" alt="Avatar" style="width:100%">
@@ -61,20 +62,29 @@
       </div>
     </div>
 </div>
- <script>
+  <div class="hamburger" onclick="toggleNav()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
+    <div class="sidebar">
+        <ul class="navigation">
+            <li><i class="fa fa-home"></i> Rentals</li>
+            <li><i class="fa fa-building"></i> Stands</li>
+            <li><i class="fa fa-shopping-cart"></i> Sales</li>
+            <li><i class="fa fa-server"></i> Hosting</li>
+        </ul>
+    </div>
+
+    <script>
         function toggleNav() {
             var navigation = document.querySelector('.navigation');
-            var hamburger = document.querySelector('.hamburger');
             
             if (navigation.style.display === 'none') {
                 navigation.style.display = 'block';
                 
-                hamburger.classList.toggle("change");
-                
             } else {
                 navigation.style.display = 'none';
-                
-                hamburger.classList.toggle("change");
                 
             }
         }
