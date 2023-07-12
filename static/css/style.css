@@ -12,14 +12,22 @@ body {
     background-color: aliceblue;
 }
 
-.navigation{
-    color:rgb(55, 4, 131);
-    display: flex;
-    justify-content: space-evenly;
-    list-style: none;
-    font-size: 2rem;
-    font-family: fantasy;
+.navigation {
+  color: rgb(55, 4, 131);
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  font-size: 2rem;
+  font-family: fantasy;
 }
+
+@media screen and (max-width: 600px) {
+  .navigation {
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
+}
+
 
 .card {
   flex-basis: calc(50% - 20px);
