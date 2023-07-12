@@ -13,22 +13,30 @@ body {
 }
 
 .navigation {
-  color: rgb(55, 4, 131);
-  display: flex;
-  justify-content: space-evenly;
-  list-style: none;
-  font-size: 2rem;
-  font-family: fantasy;
-}
-
-@media screen and (max-width: 600px) {
-  .navigation {
-    flex-direction: column;
-    font-size: 1.5rem;
-  }
-}
-
-
+            color: rgb(55, 4, 131);
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            font-size: 2rem;
+            font-family: fantasy;
+        }
+        .sidebar {
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1;
+        }
+        @media only screen and (max-width: 768px) {
+            .navigation {
+                display: none;
+                flex-direction: column;
+            }
+            .sidebar {
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+        }
 .card {
   flex-basis: calc(50% - 20px);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
