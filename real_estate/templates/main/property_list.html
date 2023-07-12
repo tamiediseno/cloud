@@ -1,0 +1,209 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!-- Add icons for rent, stands, booking, sale, and main page -->
+    <div class="icons">
+        <i class="fas fa-home" data-type="rent"></i>
+        <i class="fas fa-building" data-type="stands"></i>
+        <i class="fas fa-book" data-type="booking"></i>
+        <i class="fas fa-dollar-sign" data-type="sale"></i>
+        <i class="fas fa-globe" data-type="main"></i>
+    </div>
+    <div class="message">        
+        <h1>finding  a home is a gift but its doesnt have to be difficult</h1>
+    </div>
+    <!-- Add a container element for the properties -->
+    <div class="properties">
+        {% for property in object_list %}
+            <!-- Add a data attribute to each property element to indicate its type -->
+            <div class="property" data-type="{% if property.is_for_rent %}rent{% elif property.is_stand_for_sale %}stands{% elif property.is_for_sale %}sale{% endif %}">
+                <!-- display all the images associated with the property -->
+                {% for property_image in property.images.all %}
+                    {% if property_image.is_main %}
+                        <img src="{{ property_image.image.url }}" alt="{{ property.name }}">
+                    {% endif %}
+                {% endfor %}
+                <h2>{{ property.name }}</h2>
+                <p>{{ property.description }}</p>
+                <p>Price: {{ property.price }} {{ property.currency }}</p>
+
+                <!-- Add a countdown timer for properties with an active bidding period -->
+                {% if property.bidding_end_time and property.get_time_remaining > 0 %}
+                    <p>Time remaining: <span class="countdown" data-end-time="{{ property.bidding_end_time|date:'c' }}"></span></p>
+                {% endif %}
+
+                <a href="{% url 'property_detail' property.pk %}">Make An Offer</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Add JavaScript code to filter the properties when an icon is clicked -->
+    <script>
+        // Get the icons and properties elements
+        const icons = document.querySelectorAll('.icons i');
+        const properties = document.querySelectorAll('.properties .property');
+
+        // Keep track of the currently selected icon
+        let currentIcon = null;
+
+        // Add a click event listener to each icon
+        icons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                // Check if the clicked icon is the same as the currently selected icon
+                if (icon === currentIcon) {
+                    // Show all properties
+                    properties.forEach(property => {
+                        property.style.display = 'block';
+                    });
+                    return;
+                }
+
+                // Update the currently selected icon
+                currentIcon = icon;
+
+                // Get the type of the clicked icon
+                const type = icon.getAttribute('data-type');
+
+                // Show only the properties of the selected type
+                properties.forEach(property => {
+                    if (type === 'main' || property.getAttribute('data-type') === type) {
+                        property.style.display = 'block';
+                    } else {
+                        property.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Get all countdown elements
+        const countdowns = document.querySelectorAll('.countdown');
+
+        // Update all countdown timers every second
+        setInterval(() => {
+            countdowns.forEach(countdown => {
+                // Get the end time of the bidding period
+                const endTime = new Date(countdown.getAttribute('data-end-time'));
+
+                // Calculate the time remaining in seconds
+                const timeRemaining = Math.round((endTime - new Date()) / 1000);
+
+                // Check if the bidding period has ended
+                if (timeRemaining <= 0) {
+                    countdown.textContent = 'Bidding has ended';
+                    return;
+                }
+
+                // Calculate the number of days, hours, minutes, and seconds remaining
+                const days = Math.floor(timeRemaining / 86400);
+                const hours = Math.floor((timeRemaining % 86400) / 3600);
+                const minutes = Math.floor((timeRemaining % 3600) / 60);
+                const seconds = timeRemaining % 60;
+
+                // Update the countdown text
+                countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            });
+        }, 1000);
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+
+:root {
+    --primary-color: #c20098;
+    --secondary-color: #f9a11b;
+    --third-color:rgb(17, 16, 16);
+}
+
+.message{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    text-transform: capitalize;
+    background-color: var(--secondary-color);
+}
+
+.properties{
+   display: flex;
+    justify-content: space-evenly;
+    margin-top: 100px;
+    text-align: center;
+    flex-wrap: wrap; /* Allow the cards to wrap onto multiple lines */
+}
+
+.property {
+    width: calc(33.33% - 20px); /* Display 3 cards per row, subtracting the margin */
+    margin: 10px; /* Add 10px of space outside the border of each card */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    background-color: var(--third-color);
+}
+
+.property:hover {
+    transform: translateY(-5px);
+}
+
+.property[data-type="rent"] {
+    border-top: 5px solid var(--primary-color);
+}
+
+.property[data-type="stands"] {
+    border-top: 5px solid var(--secondary-color);
+}
+
+.property[data-type="sale"] {
+    border-top: 5px solid var(--primary-color);
+}
+
+.property h2 {
+    margin-top: 20px;
+    font-size: 24px;
+    background-color: var(--secondary-color);
+}
+
+.property p {
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+
+}
+
+.property a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+.properties img{
+    width: 350px;
+    height: 310px;
+    }
+   
+        .icons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .icons i {
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+{% endblock %}

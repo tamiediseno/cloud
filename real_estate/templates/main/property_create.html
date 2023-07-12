@@ -1,0 +1,61 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Cloud Archers</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <img src="{% static 'images/logo.svg' %}" alt="" class="logo">
+</head>
+<body>
+   <nav>
+    <ul class="navigation">
+        <li><i class="fa fa-home"></i> Rentals</li>
+        <li><i class="fa fa-building"></i> Stands</li>
+        <li><i class="fa fa-shopping-cart"></i> Sales</li>
+        <li><i class="fa fa-server"></i> Hosting</li>
+    </ul>
+   </nav> 
+
+<div class="row">
+    <div class="card">
+      <img src="{% static 'images/rent.jpg' %}" alt="Avatar" style="width:100%">
+      <div class="container">
+        
+<a href="{% url 'register' %}"><button>REGISTER</button></a>
+ 
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{% static 'images/rental.jpg' %}" alt="Avatar" style="width:100%">
+      <div class="container">
+        
+<a href="{% url 'login' %}"><button>LOGIN</button></a>
+ 
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{% static 'images/home.jpg' %}" alt="Avatar" style="width:100%">
+      <div class="container">
+         
+<a href="{% url 'property_list' %}"><button>FIND</button></a>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{% static 'images/land.jpg' %}" alt="Avatar" style="width:100%">
+      <div class="container">
+       
+<a href="{% url 'property_create' %}"><button>HOST</button></a>
+
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

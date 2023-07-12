@@ -1,0 +1,320 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h1>Host or sell your Property today , starting earning passive income from your property today!!!</h1>
+    <form id="property-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-step" style="display: block;">
+            <h2>Step 1: Basic Information</h2>
+            
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.price.label_tag }}
+            {{ form.price }}
+            {{ form.currency.label_tag }}
+            {{ form.currency }}
+        </div>
+        <div class="form-step" style="display: none;">
+            <h2>Step 2: Property Details</h2>
+            <!-- remove the image field -->
+            {{ form.is_for_sale.label_tag }}
+            {{ form.is_for_sale }}
+            {{ form.is_for_rent.label_tag }}
+            {{ form.is_for_rent }}
+            {{ form.is_stand_for_sale.label_tag }}
+            {{ form.is_stand_for_sale }}
+            {{ form.bills_included_water_electricity.label_tag }}
+            {{ form.bills_included_water_electricity }}
+
+            <!-- add a drop zone for uploading images -->
+            <h3>Images</h3>
+            <div id="drop-zone" style="width: 300px; height: 200px; border: 2px dashed #ccc;">
+                Drag and drop images here
+            </div>
+
+            <!-- add a container for the PropertyImage forms -->
+            <div id="image-form-container">
+                {{ image_formset.management_form }}
+                {% for image_form in image_formset %}
+                    <div class="image-form">
+                        {{ image_form.image.label_tag }}
+                        {{ image_form.image }}
+                        {{ image_form.is_main.label_tag }}
+                        {{ image_form.is_main }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-step" style="display: none;">
+            <h2>Step 3: Additional Information</h2>
+            
+            <!-- Add fields for solar generator -->
+            {{ form.solar_generator_rental_fee.label_tag }}
+            {{ form.solar_generator_rental_fee }}
+
+            {{ form.solar_generator_purchase_price.label_tag }}
+            {{ form.solar_generator_purchase_price }}
+
+            <!-- Add fields for bidding -->
+            {{ form.bidding_start_time.label_tag }} 
+            {{ form.bidding_start_time }}
+
+            {{ form.bidding_end_time.label_tag }} 
+            {{ form.bidding_end_time }}
+
+            
+            
+            
+            {{ form.room_size.label_tag }}
+            {{ form.room_size }}
+            
+            {{ form.number_of_rooms.label_tag }}
+            {{ form.number_of_rooms }}
+
+            
+            {{ form.location.label_tag }}
+            {{ form.location }}
+
+            
+            {{ form.city.label_tag }}
+            {{ form.city }}
+
+        </div>
+        <input type="button" value="Previous" id="previous-button" style="display: none;">
+        <input type="button" value="Next" id="next-button">
+        <input type="submit" value="Save">
+    </form>
+
+
+
+
+
+
+    <!-- rest of the code -->
+
+
+    <script>
+        // get a reference to the previous and next buttons
+        const previousButton = document.querySelector('#previous-button');
+        const nextButton = document.querySelector('#next-button');
+
+        // get an array of all the form steps
+        const formSteps = Array.from(document.querySelectorAll('.form-step'));
+
+        // set the initial step index
+        let currentStepIndex = 0;
+
+        // add an event listener to the previous button
+        previousButton.addEventListener('click', () => {
+            // hide the current step
+            formSteps[currentStepIndex].style.display = 'none';
+
+            // decrement the current step index
+            currentStepIndex--;
+
+            // show the previous step
+            formSteps[currentStepIndex].style.display = 'block';
+
+            // update the button visibility
+            updateButtonVisibility();
+        });
+
+        // add an event listener to the next button
+        nextButton.addEventListener('click', () => {
+            // hide the current step
+            formSteps[currentStepIndex].style.display = 'none';
+
+            // increment the current step index
+            currentStepIndex++;
+
+            // show the next step
+            formSteps[currentStepIndex].style.display = 'block';
+
+            // update the button visibility
+            updateButtonVisibility();
+        });
+
+        function updateButtonVisibility() {
+          if (currentStepIndex === 0) {
+              previousButton.style.display = 'none';
+          } else {
+              previousButton.style.display = 'inline-block';
+          }
+
+          if (currentStepIndex === (formSteps.length - 1)) {
+              nextButton.style.display = 'none';
+          } else {
+              nextButton.style.display = 'inline-block';
+          }
+      }
+
+        const dropZone = document.querySelector('#drop-zone');
+
+        // prevent the default behavior when a file is dragged over the drop zone
+        dropZone.addEventListener('dragover', (event) => {
+          event.preventDefault();
+        });
+
+        // handle the drop event
+        dropZone.addEventListener('drop', (event) => {
+          event.preventDefault();
+
+          // get the dropped files
+          const files = event.dataTransfer.files;
+
+          // handle each dropped file
+          for (const file of files) {
+            // create a new PropertyImage form with the file data
+            const imageForm = createImageForm(file);
+            document.querySelector('#image-form-container').appendChild(imageForm);
+          }
+        });
+
+        function createImageForm(file) {
+          // clone the first PropertyImage form
+          const imageForm = document.querySelector('.image-form').cloneNode(true);
+
+          // update the image field with the file data
+          const imageField = imageForm.querySelector('input[type="file"]');
+          imageField.files = [file];
+
+          return imageForm;
+        }
+
+        flatpickr('#id_bidding_start_time', {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+        flatpickr('#id_bidding_end_time', {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
+
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #1f0506;
+    --secondary-color: #f2f2f2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+h1 {
+    text-align: center;
+    color: var(--secondary-color);
+    font-size: 46px;
+    text-transform: capitalize;
+    animation: myanimation 5s infinite;
+   
+}
+
+@keyframes myanimation {
+  25%  {color: yellow;}
+  50%  {color: rgb(228, 228, 235);}
+
+}
+h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 24px;
+}
+.form-step {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: transparent;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing:border-box;
+    border:none;
+    border-bottom:2px solid var(--primary-color);
+    transition: all 0.3s ease-in-out;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    outline:none;
+    border-bottom-color:#0077c8;
+}
+input[type="submit"] {
+    display:block;
+    width:100%;
+    background-color:#0077c8;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    transition: all 0.3s ease-in-out;
+}
+input[type="submit"]:hover {
+  background-color:#005da0;
+  
+}
+
+/* New styles */
+.form-step {
+    position: relative;
+    background-image: url('/static/images/home.jpg');
+    background-size: cover;
+    color: black;
+    font-size: 1rem;
+}
+
+.form-step::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(27, 25, 25, 0.5);
+    z-index: -1;
+}
+
+
+.form-step input[type="text"],
+.form-step input[type="number"],
+.form-step textarea{
+   background-color:#eec1c1; 
+   color:#0c0000;
+   font-weight: 900;
+   height: 80px;
+   font-size: 2rem;
+}
+
+.form-step input[type="submit"]{
+   background-color:#FF5A5F; 
+}
+
+.form-step input[type="submit"]:hover{
+   background-color:#333; 
+}
+
+
+
+    </style>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="property-detail">
+        <!-- add a container element for the slideshow -->
+        <div class="slideshow-container">
+            <!-- add a slide element for each image -->
+            {% for property_image in object.images.all %}
+                <div class="slide">
+                    <img src="{{ property_image.image.url }}" alt="{{ object.name }}">
+                </div>
+            {% endfor %}
+            <!-- add navigation buttons -->
+            <a class="prev" onclick="changeSlide(-1)">❮</a>
+            <a class="next" onclick="changeSlide(1)">❯</a>
+        </div>
+        <p>{{ object.description }}</p>
+        <p>Price: {{ object.price }} {{ object.currency }}</p>
+        <p>Solar Generator Rental: {{ object.solar_generator_rental_fee }} </p>
+         <p>Solar Generator Sale: {{ object.solar_generator_purchase_price }} </p>
+        <a href="{% url 'make_bid' property.id %}">Make a bid</a>
+
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <!-- add CSS styles for a modern real estate feel -->
+    <style>
+        /* import a modern font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+        /* set the font for the body element */
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* set the color scheme */
+        :root {
+            --primary-color: #0077c2;
+            --secondary-color: #f2f2f2;
+            --tertiary-color: #e6dcdc;
+        }
+
+        /* style the property detail element */
+        .property-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+            text-align: center;
+            background-color: rgb(40, 41, 39);
+        }
+
+        .property-detail img {
+            width: 100%;
+            height: auto;
+        }
+
+        .property-detail p {
+            margin-top: 20px;
+            color: var(--tertiary-color);
+        }
+
+        /* style the form */
+        .property-detail form {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .property-detail label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--tertiary-color);
+            background-color:black;
+        }
+
+        .property-detail input[type="text"],
+        .property-detail input[type="email"],
+        .property-detail textarea,
+        .property-detail select {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: aqua;
+        }
+
+        .property-detail input[type="submit"] {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+          cursor:pointer
+        }
+
+      /* style the slideshow */
+      .slideshow-container {
+          position:relative;
+          margin:auto;
+          max-width:800px
+      }
+      
+      .slide {
+          display:none
+      }
+      
+      .prev,.next{
+          cursor:pointer;
+          position:absolute;
+          top:50%;
+          width:auto;
+          margin-top:-22px;
+          padding:16px;
+          color:white;
+          font-weight:bold;
+          font-size:18px;
+          transition:.6s ease;
+          border-radius:0 3px 3px 0
+      }
+      
+      .next{
+          right:0;border-radius:3px 0 0 3px
+      }
+      
+      .prev:hover,.next:hover{
+          background-color:#00000080
+      }
+    </style>
+
+    <!-- add JavaScript code to handle the slideshow -->
+    <script>
+      let slideIndex = 1;
+
+      function showSlide(n) {
+          const slides = document.querySelectorAll('.slide');
+          if (n > slides.length) { slideIndex = 1; }
+          if (n < 1) { slideIndex = slides.length; }
+          for (let i = 0; i < slides.length; i++) {
+              slides[i].style.display = 'none';
+          }
+          slides[slideIndex - 1].style.display = 'block';
+      }
+
+      function changeSlide(n) {
+          showSlide(slideIndex += n);
+      }
+
+      showSlide(slideIndex);
+    </script>
+{% endblock %}

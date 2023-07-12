@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="form-container">
+    <h2>Register</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.username.label_tag }} {{ form.username }}
+      </div>
+      <div class="form-group">
+        {{ form.email.label_tag }} {{ form.email }}
+      </div>
+      <div class="form-group">
+        {{ form.phone_number.label_tag }} {{ form.phone_number }}
+      </div>
+      <div class="form-group">
+        {{ form.password1.label_tag }} {{ form.password1 }}
+      </div>
+      <div class="form-group">
+        {{ form.password2.label_tag }} {{ form.password2 }}
+      </div>
+      <div class="form-group">
+        <button type="submit">Register</button>
+      </div>
+    </form>
+  </div>
+
+ <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+      label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: rgba(255,255,255,0.8);
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group {
+      margin-top: 20px;
+      text-align: left;
+    }
+    button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      text-align:center
+    } 
+
+input[type="Username"] {
+      width: 300px;
+      height: 90px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 2rem;
+    }
+
+    input[type="Email"] {
+      width: 300px;
+      height: 90px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 2rem;
+
+    }
+
+    input[type="text"] {
+      width: 300px;
+      height: 90px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 2rem;
+    }
+
+    input[type="password"] {
+      width: 300px;
+      height: 90px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 2rem;
+
+    }
+
+    input[type="password confirmation"] {
+      width: 300px;
+      height: 90px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 2rem;
+    }
+
+  
+  </style>
+{% endblock %}
