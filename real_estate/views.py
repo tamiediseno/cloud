@@ -225,7 +225,7 @@ class StandForSaleDeleteView(DeleteView):
 class MyLoginView(LoginView):
     template_name = 'auth/my_login.html'
     form_class = AccessKeyLoginForm
-     success_url = '/property-list/'
+     success_url = '/property_list/'
 
 class MyRegistrationView(FormView):
     template_name = 'auth/my_registration.html'
