@@ -227,6 +227,10 @@ class MyLoginView(LoginView):
     form_class = AccessKeyLoginForm
     success_url = reverse_lazy('property_list')
 
+    def get_success_url(self):
+        return reverse('property_list')
+
+
 class MyRegistrationView(FormView):
     template_name = 'auth/my_registration.html'
     form_class = AccessKeyCreationForm
