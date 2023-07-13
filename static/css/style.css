@@ -45,8 +45,14 @@ body {
                  z-index: 999;
             }
 
+            .logo{
+    width: 250px;
+    background-color: aliceblue;
+}
+
              .navigation li {
-        font-size: 1.5rem;
+        font-size: 2rem;
+                 margin: 0 10px;
              }
             .hamburger {
                 display: block;
