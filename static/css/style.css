@@ -45,6 +45,10 @@ body {
                  z-index: 999;
             }
 
+              .card {
+        flex-basis: 100%;
+    }
+
             .logo{
     width: 250px;
     background-color: aliceblue;
